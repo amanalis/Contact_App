@@ -61,6 +61,9 @@ public class MainActivity extends AppCompatActivity {
         int affectedRows = db.updateContact(aman2);
         Log.d("dbaman", "affectedRows are: " + affectedRows);
 
+        db.deleteContactById(12);
+        db.deleteContactById(5);
+
         //get all contacts
         List<Contact> allContacts = db.getAllContacts();
         for (Contact contact : allContacts) {
@@ -68,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
                     " Name: " + contact.getName() +
                     " Contact: " + contact.getPhoneNumber() + "\n");
         }
+
 
 
     }

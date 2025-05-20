@@ -67,7 +67,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return contactList;
     }
 
-    public int updateContact(Contact contact){
+    public int updateContact(Contact contact) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -77,5 +77,20 @@ public class MyDBHandler extends SQLiteOpenHelper {
         //lets update now
         return db.update(Params.TABLE_NAME, values, Params.KEY_ID + "=?",
                 new String[]{String.valueOf(contact.getId())});
+    }
+
+    public void deleteContactById(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(Params.TABLE_NAME, Params.KEY_ID + "=?", new String[]{
+                String.valueOf(id)
+        });
+        db.close();
+    }
+    public void deleteContact(Contact contact) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(Params.TABLE_NAME, Params.KEY_ID + "=?", new String[]{
+                String.valueOf(contact.getId())
+        });
+        db.close();
     }
 }
