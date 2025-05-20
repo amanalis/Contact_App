@@ -12,6 +12,8 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.dbdemo.data.MyDBHandler;
 import com.example.dbdemo.model.Contact;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -53,6 +55,12 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("dbaman", "Id's are: " + aman.getId() + aman1.getId() + aman2.getId());
 
-
+        //get all contacts
+        List<Contact> allContacts = db.getAllContacts();
+        for (Contact contact : allContacts) {
+            Log.d("dbaman", "Id: " + contact.getId() +
+                    " Name: " + contact.getName() +
+                    " Contact: " + contact.getPhoneNumber() + "\n");
+        }
     }
 }
