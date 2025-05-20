@@ -52,8 +52,14 @@ public class MainActivity extends AppCompatActivity {
 
         //adding contact
         db.addContact(aman2);
-
         Log.d("dbaman", "Id's are: " + aman.getId() + aman1.getId() + aman2.getId());
+
+        //contact update
+        aman2.setId(19);
+        aman2.setName("Akram");
+        aman2.setPhoneNumber("6969696969969");
+        int affectedRows = db.updateContact(aman2);
+        Log.d("dbaman", "affectedRows are: " + affectedRows);
 
         //get all contacts
         List<Contact> allContacts = db.getAllContacts();
@@ -62,5 +68,7 @@ public class MainActivity extends AppCompatActivity {
                     " Name: " + contact.getName() +
                     " Contact: " + contact.getPhoneNumber() + "\n");
         }
+
+
     }
 }

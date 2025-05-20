@@ -66,4 +66,16 @@ public class MyDBHandler extends SQLiteOpenHelper {
         }
         return contactList;
     }
+
+    public int updateContact(Contact contact){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(Params.KEY_NAME, contact.getName());
+        values.put(Params.KEY_PHONE, contact.getPhoneNumber());
+
+        //lets update now
+        return db.update(Params.TABLE_NAME, values, Params.KEY_ID + "=?",
+                new String[]{String.valueOf(contact.getId())});
+    }
 }
