@@ -93,4 +93,11 @@ public class MyDBHandler extends SQLiteOpenHelper {
         });
         db.close();
     }
+
+    public int getCount(){
+        String query = "SELECT * FROM " + Params.TABLE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query,null);
+        return cursor.getCount();
+    }
 }

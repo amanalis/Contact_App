@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
                     " Contact: " + contact.getPhoneNumber() + "\n");
         }
 
+        Log.d("dbaman", "Count: " + db.getCount());
 
 
     }
