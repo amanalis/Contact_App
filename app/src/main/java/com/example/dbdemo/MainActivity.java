@@ -25,6 +25,10 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     ListView listView;
+    MyDBHandler db;
+    ArrayList<String> contacts;
+    List<Contact> allContacts;
+    ArrayAdapter<String> arrayAdapter;
 
     /*int contactId;
     String contactName;
@@ -41,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        MyDBHandler db = new MyDBHandler(MainActivity.this);
+        db = new MyDBHandler(MainActivity.this);
 
 /*
         //Creating contact
@@ -80,11 +84,11 @@ public class MainActivity extends AppCompatActivity {
         db.deleteContactById(5);
 */
 
-        ArrayList<String> contacts = new ArrayList<>();
+        contacts = new ArrayList<>();
         listView = findViewById(R.id.listView);
 
         //get all contacts
-        List<Contact> allContacts = db.getAllContacts();
+        allContacts = db.getAllContacts();
         for (Contact contact : allContacts) {
             Log.d("dbaman", "Id: " + contact.getId() +
                     " Name: " + contact.getName() +
@@ -97,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, contacts);
+        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, contacts);
         listView.setAdapter(arrayAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -115,5 +119,27 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadContacts();
+    }
+
+    private void loadContacts(){
+        contacts.clear();
+        allContacts = db.getAllContacts();
+
+        for (Contact contact : allContacts){
+            contacts.add(contact.getName() + " (" + contact.getPhoneNumber() + ")");
+        }
+        if(arrayAdapter == null){
+            arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, contacts);
+            listView.setAdapter(arrayAdapter);
+        }else {
+            arrayAdapter.notifyDataSetChanged();
+        }
+
     }
 }
