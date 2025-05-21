@@ -16,7 +16,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.dbdemo.adapter.RecyclerViewAdapter;
 import com.example.dbdemo.data.MyDBHandler;
 import com.example.dbdemo.model.Contact;
 
@@ -30,9 +33,11 @@ public class MainActivity extends AppCompatActivity {
     List<Contact> allContacts;
     ArrayAdapter<String> arrayAdapter;
 
-    /*int contactId;
-    String contactName;
-    String contactNum;*/
+    //recycler view
+    private RecyclerView recyclerView;
+    private RecyclerViewAdapter recyclerViewAdapter;
+    private ArrayList<Contact> contactArrayList;
+    ArrayAdapter<String> arrayRVAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,16 +50,21 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+        //Recyclerview initialization
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         db = new MyDBHandler(MainActivity.this);
 
-/*
+
         //Creating contact
         Contact aman = new Contact();
         aman.setPhoneNumber("123456789012");
         aman.setName("Aman");
-
         //adding contact
         db.addContact(aman);
+/*
 
         //Creating contact
         Contact aman1 = new Contact();
@@ -84,8 +94,9 @@ public class MainActivity extends AppCompatActivity {
         db.deleteContactById(5);
 */
 
-        contacts = new ArrayList<>();
-        listView = findViewById(R.id.listView);
+        contactArrayList = new ArrayList<>();
+//        contacts = new ArrayList<>();
+//        listView = findViewById(R.id.listView);
 
         //get all contacts
         allContacts = db.getAllContacts();
@@ -93,18 +104,19 @@ public class MainActivity extends AppCompatActivity {
             Log.d("dbaman", "Id: " + contact.getId() +
                     " Name: " + contact.getName() +
                     " Contact: " + contact.getPhoneNumber() + "\n");
-            contacts.add(contact.getName() + " (" + contact.getPhoneNumber() + ")");
-
-            /*contactId = contact.getId();
-            contactName=contact.getName();
-            contactNum=contact.getPhoneNumber();*/
-
+//            contacts.add(contact.getName() + " (" + contact.getPhoneNumber() + ")");
+            contactArrayList.add(contact);
         }
 
-        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, contacts);
-        listView.setAdapter(arrayAdapter);
+        //for listView
+//        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, contacts);
+//        listView.setAdapter(arrayAdapter);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        //For recycler view
+        recyclerViewAdapter = new RecyclerViewAdapter(MainActivity.this, contactArrayList);
+        recyclerView.setAdapter(recyclerViewAdapter);
+
+       /* listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 String Contact = "Contact" + position + " " + ((TextView) view).getText().toString();
@@ -118,28 +130,28 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("number", selectedContact.getPhoneNumber());
                 startActivity(intent);
             }
-        });
+        });*/
     }
 
-    @Override
+    /*@Override
     protected void onResume() {
         super.onResume();
         loadContacts();
     }
 
-    private void loadContacts(){
+    private void loadContacts() {
         contacts.clear();
         allContacts = db.getAllContacts();
 
-        for (Contact contact : allContacts){
+        for (Contact contact : allContacts) {
             contacts.add(contact.getName() + " (" + contact.getPhoneNumber() + ")");
         }
-        if(arrayAdapter == null){
+        if (arrayAdapter == null) {
             arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, contacts);
             listView.setAdapter(arrayAdapter);
-        }else {
+        } else {
             arrayAdapter.notifyDataSetChanged();
         }
 
-    }
+    }*/
 }
