@@ -1,17 +1,22 @@
 package com.example.dbdemo.adapter;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
-import android.util.Log;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.dbdemo.MainActivity;
 import com.example.dbdemo.R;
+import com.example.dbdemo.displayContact;
 import com.example.dbdemo.model.Contact;
 
 import java.util.List;
@@ -67,7 +72,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         @Override
         public void onClick(View view) {
-            Log.d("dbaman", "Clicked ");
+            int position = this.getAdapterPosition();
+            Contact dbContact = contactList.get(position);
+
+            Intent intent = new Intent(context, displayContact.class);
+            intent.putExtra("id", dbContact.getId());
+            intent.putExtra("name", dbContact.getName());
+            intent.putExtra("number", dbContact.getPhoneNumber());
+            context.startActivity(intent);
+
+            Toast.makeText(context, "The position is " + String.valueOf(position), Toast.LENGTH_SHORT).show();
         }
     }
 }

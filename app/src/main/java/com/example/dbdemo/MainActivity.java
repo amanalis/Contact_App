@@ -133,25 +133,25 @@ public class MainActivity extends AppCompatActivity {
         });*/
     }
 
-    /*@Override
+    @Override
     protected void onResume() {
         super.onResume();
         loadContacts();
     }
 
     private void loadContacts() {
-        contacts.clear();
+        contactArrayList.clear();
         allContacts = db.getAllContacts();
 
         for (Contact contact : allContacts) {
-            contacts.add(contact.getName() + " (" + contact.getPhoneNumber() + ")");
+            contactArrayList.add(contact);
         }
         if (arrayAdapter == null) {
-            arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, contacts);
-            listView.setAdapter(arrayAdapter);
+            recyclerViewAdapter = new RecyclerViewAdapter(MainActivity.this, contactArrayList);
+            recyclerView.setAdapter(recyclerViewAdapter);
         } else {
-            arrayAdapter.notifyDataSetChanged();
+            recyclerViewAdapter.notifyDataSetChanged();
         }
 
-    }*/
+    }
 }
