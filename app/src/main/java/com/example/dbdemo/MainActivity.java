@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Contact> contactArrayList;
     ArrayAdapter<String> arrayRVAdapter;
 
+    ImageButton addBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,13 +61,13 @@ public class MainActivity extends AppCompatActivity {
         db = new MyDBHandler(MainActivity.this);
 
 
-        //Creating contact
+/*        //Creating contact
         Contact aman = new Contact();
         aman.setPhoneNumber("123456789012");
         aman.setName("Aman");
         //adding contact
         db.addContact(aman);
-/*
+
 
         //Creating contact
         Contact aman1 = new Contact();
@@ -131,6 +134,18 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });*/
+        addBtn = findViewById(R.id.addBtn);
+
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, Add_Contact.class);
+                startActivity(intent);
+            }
+            public void onLongClicked(int position) {
+                Toast.makeText(MainActivity.this, "Add Contact!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
